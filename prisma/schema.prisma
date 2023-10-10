@@ -8,23 +8,31 @@ datasource db {
 }
 
 model User {
-  id          String  @id @default(uuid())
-  name        String
-  email       String
-  isAdmin     Boolean
-  preferences Json
-  blob        Bytes // Unsuported("") 
-  posts       Post[]
-
+  id            String  @id @default(uuid())
+  name          String
+  email         String
+  isAdmin       Boolean
+  preferences   Json
+  blob          Bytes // Unsuported("") 
+  writtenPosts  Post[]  @relation("WrittenPosts")
+  favoritePosts Post[]  @relation("FavoritePosts")
   // id          Int     @id @default(autoincrement())
   // largeNumber BigInt
+  Post          Post[]
 }
 
 model Post {
-  id        String   @id @default(uuid())
-  author    User     @relation(fields: [authorId], references: [id])
-  authorId  String
-  rating    Decimal // Float
+  id String @id @default(uuid())
+
+  author   User   @relation("WrittenPosts", fields: [authorId], references: [id])
+  authorId String
+
+  favoritedBy   User?   @relation("FavoritePosts", fields: [favoritedById], references: [id])
+  favoritedById String?
+
+  rating    Float
   createdAt DateTime
   updatedAt DateTime
+  User      User?    @relation(fields: [userId], references: [id])
+  userId    String?
 }
