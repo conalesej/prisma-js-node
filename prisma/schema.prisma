@@ -9,38 +9,46 @@ datasource db {
 
 model User {
   id             String          @id @default(uuid())
+  age            Int
   name           String
   email          String
   isAdmin        Boolean
   blob           Bytes // Unsuported("") 
   writtenPosts   Post[]          @relation("WrittenPosts")
   favoritePosts  Post[]          @relation("FavoritePosts")
-  // id          Int     @id @default(autoincrement())
-  // largeNumber BigInt
   UserPreference UserPreference?
+
+  @@unique([email])
+  @@index([email, name])
 }
 
 model UserPreference {
   id           String  @id @default(uuid())
   emailUpdates Boolean
   user         User    @relation(fields: [userId], references: [id])
-  userId       String  @unique // Making this one to one relationship 
+  userId       String // @unique // Making this one to one relationship 
+
+  @@unique([userId])
 }
 
 model Post {
   id            String   @id @default(uuid())
+  title         String
   author        User     @relation("WrittenPosts", fields: [authorId], references: [id])
   authorId      String
   favoritedBy   User?    @relation("FavoritePosts", fields: [favoritedById], references: [id])
   favoritedById String?
-  rating        Float
-  createdAt     DateTime
-  updatedAt     DateTime
+  averageRating Float
+  createdAt     DateTime @default(now())
+  updatedAt     DateTime @updatedAt
 
   categories Category[]
+
+  // @@id([title, authorId]) // We're saying that the title and authorid combination should be the id
 }
 
 model Category {
   id    String @id @default(uuid())
+  name  String
   posts Post[]
 }
