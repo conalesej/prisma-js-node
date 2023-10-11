@@ -12,7 +12,7 @@ model User {
   age            Int
   name           String
   email          String
-  isAdmin        Boolean
+  role           Role            @default(BASIC)
   blob           Bytes // Unsuported("") 
   writtenPosts   Post[]          @relation("WrittenPosts")
   favoritePosts  Post[]          @relation("FavoritePosts")
@@ -51,4 +51,9 @@ model Category {
   id    String @id @default(uuid())
   name  String
   posts Post[]
+}
+
+enum Role {
+  BASIC
+  ADMIN
 }
