@@ -39,13 +39,33 @@ const main = async () => {
   //   // },
   // });
 
-  const user = await prisma.user.findUnique({
-    where: {
-      email: "conalesej@gmail.com",
-      age_name: {
-        age: 24,
+  await prisma.user.createMany({
+    data: [
+      {
         name: "Ej",
+        age: 24,
+        email: "conalesej@gmail.com",
       },
+      {
+        name: "Sally",
+        age: 29,
+        email: "Hello.com@gmail.com.ph",
+        role: "BASIC",
+      },
+    ],
+  });
+
+  const user = await prisma.user.findMany({
+    where: {
+      email: {
+        contains: "@gmail.com",
+      },
+    },
+    distinct: ["name", "age"], // Return all the user with an email that contains @gmail.com and with a unique name and age
+    take: 2, // paginated get 2
+    skip: 1, // skipp the first item
+    orderBy: {
+      age: "asc",
     },
   });
 
