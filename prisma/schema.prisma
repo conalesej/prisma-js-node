@@ -19,7 +19,7 @@ model User {
   userPreference   UserPreference? @relation(fields: [userPreferenceId], references: [id])
   userPreferenceId String?         @unique // Making this one to one relationship  @unique
 
-  @@unique([email])
+  @@unique([age, name])
   @@index([email, name])
 }
 
