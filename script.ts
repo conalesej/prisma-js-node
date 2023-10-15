@@ -58,7 +58,13 @@ const main = async () => {
   const user = await prisma.user.findMany({
     where: {
       email: {
-        contains: "@gmail.com",
+        // contains: "@gmail.com",
+        // equals: "conalesej@gmail.com",
+        // not: "conalesej@gmail.com",
+        in: ["Ej", "Elaine"], // or //Not In
+      },
+      age: {
+        lte: 20, // Less than or equal to 20
       },
     },
     distinct: ["name", "age"], // Return all the user with an email that contains @gmail.com and with a unique name and age
@@ -69,7 +75,7 @@ const main = async () => {
     },
   });
 
-  console.log(user);
+  console.log(user.length);
 };
 
 main()
