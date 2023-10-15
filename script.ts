@@ -57,18 +57,23 @@ const main = async () => {
 
   const user = await prisma.user.findMany({
     where: {
-      AND: [ // OR
-        {
-          email: {
-            endsWith: "@gmail.com",
-          },
-        },
-        {
-          age: {
-            gte: 20,
-          },
-        },
-      ],
+      userPreference: {
+        emailUpdates: true,
+      },
+
+      // AND: [ // OR / NOT = negates all the shit
+      //   {
+      //     email: {
+      //       endsWith: "@gmail.com",
+      //     },
+      //   },
+      //   {
+      //     age: {
+      //       gte: 20,
+      //     },
+      //   },
+      // ],
+
       // email: {
       //   // contains: "@gmail.com", // or endsWith / starts with
       //   // equals: "conalesej@gmail.com",
