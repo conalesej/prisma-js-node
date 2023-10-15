@@ -57,9 +57,15 @@ const main = async () => {
 
   const user = await prisma.user.findMany({
     where: {
-      userPreference: {
-        emailUpdates: true,
+      writtenPosts: {
+        every: {
+          title: "Test",
+        },
       },
+
+      // userPreference: {     // one to one
+      //   emailUpdates: true,
+      // },
 
       // AND: [ // OR / NOT = negates all the shit
       //   {
