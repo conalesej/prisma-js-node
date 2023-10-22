@@ -114,9 +114,7 @@ const main = async () => {
   const user = await prisma.user.update({
     data: {
       userPreference: {
-        connect: {
-          id: "e8bf583d-4d7a-4701-a69e-9a7d6eabd34b",
-        },
+        disconnect: true,
       },
     },
     where: { email: "conalesej@gmail.com" },
