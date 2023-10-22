@@ -105,11 +105,15 @@ const main = async () => {
   //   where: { email: "conalesej@gmail.com" },
   // });
 
-  const user = await prisma.user.updateMany({
+  const user = await prisma.user.update({
     data: {
-      name: "Ej Test",
+      userPreference: {
+        create: {
+          emailUpdates: false,
+        },
+      },
     },
-    where: { name: "Ej Conales" },
+    where: { email: "conalesej@gmail.com" },
   });
 
   console.log(user);
